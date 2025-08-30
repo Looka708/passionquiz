@@ -33,14 +33,16 @@ export type RunCodeOutput = z.infer<typeof RunCodeOutputSchema>;
 
 
 export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
-  const JUDGE0_API_HOST = 'https://judge0.com';
+  const JUDGE0_API_HOST = 'https://judge0-ce.p.rapidapi.com';
 
   // Step 1: Create a submission
   const submissionResponse = await fetch(`${JUDGE0_API_HOST}/submissions?base64_encoded=false&wait=false`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json',
-      'accept': 'application/json'
+        'X-RapidAPI-Key': process.env.JUDGE0_API_KEY || 'a02489e27bmsha2b2f3486381c00p165337jsn6212e3e7059c',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
+        'content-type': 'application/json',
+        'accept': 'application/json'
     },
     body: JSON.stringify(input)
   });
@@ -62,7 +64,9 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
   while (true) {
     const resultResponse = await fetch(`${JUDGE0_API_HOST}/submissions/${token}?base64_encoded=false`, {
       method: 'GET',
-      headers: {
+       headers: {
+        'X-RapidAPI-Key': process.env.JUDGE0_API_KEY || 'a02489e27bmsha2b2f3486381c00p165337jsn6212e3e7059c',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
         'accept': 'application/json'
       }
     });
