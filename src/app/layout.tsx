@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from '@/components/theme-provider';
 import { Footer } from '@/components/Footer';
+import { InteractiveBackground } from '@/components/InteractiveBackground';
 
 export const metadata: Metadata = {
   title: 'Passion Quiz',
@@ -29,6 +30,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <InteractiveBackground />
           <Header />
           <main className="flex-1">
             {children}
