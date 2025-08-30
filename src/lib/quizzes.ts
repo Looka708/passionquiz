@@ -1790,24 +1790,38 @@ export const quizzes: Quiz[] = [
 export const codeChallenges: CodeChallenge[] = [
   {
     id: 'reverse-string',
-    title: 'Reverse a String',
+    title: 'Compiler',
     description: 'Write a function to reverse a null-terminated string.',
     difficulty: 'Easy',
     starterCode: '#include <stdio.h>\n#include <string.h>\n\nvoid reverse(char *str) {\n  // Your code here\n}\n\nint main() {\n  char myStr[] = "hello";\n  reverse(myStr);\n  printf("%s\\n", myStr); // Should print "olleh"\n  return 0;\n}',
   },
-  {
-    id: 'find-factorial',
-    title: 'Find Factorial',
-    description: 'Write a function to calculate the factorial of a number.',
+   {
+    id: 'check-prime',
+    title: 'Check for Prime Number',
+    description: 'Write a function that determines if a given integer is a prime number.',
     difficulty: 'Easy',
-    starterCode: '#include <stdio.h>\n\nlong long factorial(int n) {\n  // Your code here\n}\n\nint main() {\n  printf("%lld\\n", factorial(5)); // Should print 120\n  return 0;\n}',
+    starterCode: '#include <stdio.h>\n#include <stdbool.h>\n\nbool isPrime(int n) {\n  // Your code here\n}\n\nint main() {\n  if (isPrime(13)) {\n    printf("13 is prime.\\n");\n  } else {\n    printf("13 is not prime.\\n");\n  }\n  return 0;\n}',
   },
   {
-    id: 'linked-list-sum',
-    title: 'Sum of Linked List',
-    description: 'Given a linked list, find the sum of all its elements.',
+    id: 'find-max-array',
+    title: 'Find Max in Array',
+    description: 'Write a function to find the maximum element in an integer array.',
+    difficulty: 'Easy',
+    starterCode: '#include <stdio.h>\n\nint findMax(int arr[], int size) {\n  // Your code here\n}\n\nint main() {\n  int numbers[] = {5, 2, 9, 1, 7};\n  printf("Max value is %d\\n", findMax(numbers, 5));\n  return 0;\n}',
+  },
+  {
+    id: 'palindrome-check',
+    title: 'Palindrome Check',
+    description: 'Write a function to check if a string is a palindrome.',
     difficulty: 'Medium',
-    starterCode: '#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n  int data;\n  struct Node* next;\n};\n\nint sumList(struct Node* head) {\n  // Your code here\n}\n\nint main() {\n  // Example usage (optional)\n  return 0;\n}',
+    starterCode: '#include <stdio.h>\n#include <string.h>\n#include <stdbool.h>\n\nbool isPalindrome(char *str) {\n  // Your code here\n}\n\nint main() {\n  if (isPalindrome("racecar")) {\n    printf("racecar is a palindrome.\\n");\n  }\n  return 0;\n}',
+  },
+  {
+    id: 'array-sort',
+    title: 'Sort an Array',
+    description: 'Implement a simple sorting algorithm (e.g., bubble sort) to sort an integer array.',
+    difficulty: 'Medium',
+    starterCode: '#include <stdio.h>\n\nvoid sortArray(int arr[], int size) {\n  // Your code here\n}\n\nint main() {\n  int numbers[] = {5, 2, 9, 1, 7};\n  sortArray(numbers, 5);\n  // Print sorted array\n  return 0;\n}',
   },
 ];
 
