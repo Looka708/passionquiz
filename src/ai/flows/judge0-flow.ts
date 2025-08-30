@@ -33,10 +33,10 @@ export type RunCodeOutput = z.infer<typeof RunCodeOutputSchema>;
 
 
 export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
-  const JUDGE0_API_HOST = 'judge0.com';
+  const JUDGE0_API_HOST = 'https://judge0.com';
 
   // Step 1: Create a submission
-  const submissionResponse = await fetch(`https://${JUDGE0_API_HOST}/submissions?base64_encoded=false&wait=false`, {
+  const submissionResponse = await fetch(`${JUDGE0_API_HOST}/submissions?base64_encoded=false&wait=false`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -60,7 +60,7 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
   // Step 2: Poll for the result
   let result: RunCodeOutput;
   while (true) {
-    const resultResponse = await fetch(`https://${JUDGE0_API_HOST}/submissions/${token}?base64_encoded=false`, {
+    const resultResponse = await fetch(`${JUDGE0_API_HOST}/submissions/${token}?base64_encoded=false`, {
       method: 'GET',
       headers: {
         'accept': 'application/json'
