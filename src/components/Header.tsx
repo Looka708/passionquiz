@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { PanelTop } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   return (
@@ -9,6 +10,9 @@ export function Header() {
           <PanelTop className="h-7 w-7" />
           <span className="font-headline">Passion Quiz</span>
         </Link>
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
