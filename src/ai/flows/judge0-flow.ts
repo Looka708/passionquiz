@@ -47,6 +47,10 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
 
   if (!submissionResponse.ok) {
       const errorBody = await submissionResponse.text();
+      // Use a more generic error for the user
+      if (submissionResponse.status === 429) {
+          throw new Error(`Rate limit exceeded. Please try again later.`);
+      }
       throw new Error(`Failed to create submission: ${submissionResponse.statusText} - ${errorBody}`);
   }
 
