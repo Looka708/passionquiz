@@ -1,4 +1,5 @@
 
+
 export type Question = {
   id: number;
   text: string;
@@ -16,6 +17,15 @@ export type Quiz = {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   questions: Question[];
 };
+
+export type CodeChallenge = {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  starterCode: string;
+};
+
 
 export const quizzes: Quiz[] = [
   {
@@ -1777,6 +1787,34 @@ export const quizzes: Quiz[] = [
   },
 ];
 
+export const codeChallenges: CodeChallenge[] = [
+  {
+    id: 'reverse-string',
+    title: 'Reverse a String',
+    description: 'Write a function to reverse a null-terminated string.',
+    difficulty: 'Easy',
+    starterCode: '#include <stdio.h>\n#include <string.h>\n\nvoid reverse(char *str) {\n  // Your code here\n}\n\nint main() {\n  char myStr[] = "hello";\n  reverse(myStr);\n  printf("%s\\n", myStr); // Should print "olleh"\n  return 0;\n}',
+  },
+  {
+    id: 'find-factorial',
+    title: 'Find Factorial',
+    description: 'Write a function to calculate the factorial of a number.',
+    difficulty: 'Easy',
+    starterCode: '#include <stdio.h>\n\nlong long factorial(int n) {\n  // Your code here\n}\n\nint main() {\n  printf("%lld\\n", factorial(5)); // Should print 120\n  return 0;\n}',
+  },
+  {
+    id: 'linked-list-sum',
+    title: 'Sum of Linked List',
+    description: 'Given a linked list, find the sum of all its elements.',
+    difficulty: 'Medium',
+    starterCode: '#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n  int data;\n  struct Node* next;\n};\n\nint sumList(struct Node* head) {\n  // Your code here\n}\n\nint main() {\n  // Example usage (optional)\n  return 0;\n}',
+  },
+];
+
 export const getQuizById = (id: string): Quiz | undefined => {
   return quizzes.find((quiz) => quiz.id === id);
 };
+
+export const getChallengeById = (id: string): CodeChallenge | undefined => {
+  return codeChallenges.find((challenge) => challenge.id === id);
+}
