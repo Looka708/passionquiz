@@ -1,11 +1,8 @@
-import Link from 'next/link';
 import { quizzes } from '@/lib/quizzes';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { QuizConfigDialog } from '@/components/quiz/QuizConfigDialog';
 
 export default function Home() {
-  const difficulties: ('Easy' | 'Medium' | 'Hard')[] = ['Easy', 'Medium', 'Hard'];
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -44,11 +41,7 @@ export default function Home() {
               </div>
             </CardHeader>
             <CardFooter className="mt-auto pt-4">
-              <Button asChild className="w-full">
-                <Link href={`/quiz/${quiz.id}`}>
-                  Start Quiz <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <QuizConfigDialog quiz={quiz} />
             </CardFooter>
           </Card>
         ))}
