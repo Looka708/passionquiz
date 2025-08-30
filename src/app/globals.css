@@ -61,7 +61,8 @@
   body {
     @apply bg-background text-foreground;
     position: relative;
-    background-color: hsl(var(--background));
+    /* This was hiding the pseudo-element */
+    /* background-color: hsl(var(--background)); */
   }
 
   body::before {
