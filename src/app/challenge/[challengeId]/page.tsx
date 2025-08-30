@@ -1,6 +1,6 @@
 import { getChallengeById } from '@/lib/quizzes';
 import { notFound } from 'next/navigation';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { CodeEditor } from '@/components/code/CodeEditor';
 
 type ChallengePageProps = {
   params: {
@@ -17,16 +17,7 @@ export default function ChallengePage({ params }: ChallengePageProps) {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-3xl">{challenge.title}</CardTitle>
-          <CardDescription>{challenge.description}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Challenge page for: {challenge.title}</p>
-          <p className="mt-4 text-muted-foreground">Compiler and code editor coming soon!</p>
-        </CardContent>
-      </Card>
+       <CodeEditor challenge={challenge} />
     </div>
   );
 }
