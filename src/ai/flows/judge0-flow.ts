@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A flow for compiling and running code using the Judge0 API.
@@ -69,7 +70,8 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
     });
     
      if (!resultResponse.ok) {
-      throw new Error(`Failed to get submission result: ${resultResponse.statusText}`);
+      const errorBody = await resultResponse.text();
+      throw new Error(`Failed to get submission result: ${resultResponse.statusText} - ${errorBody}`);
     }
 
     result = await resultResponse.json() as RunCodeOutput;
