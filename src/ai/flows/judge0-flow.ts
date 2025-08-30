@@ -63,6 +63,7 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
     const resultResponse = await fetch(`${JUDGE0_API_HOST}/submissions/${token}?base64_encoded=false`, {
       method: 'GET',
        headers: {
+        'content-type': 'application/json',
         'accept': 'application/json'
       }
     });
