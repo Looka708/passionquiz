@@ -33,7 +33,7 @@ export type RunCodeOutput = z.infer<typeof RunCodeOutputSchema>;
 
 
 export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
-  const JUDGE0_API_HOST = 'judge0-ce.p.rapidapi.com';
+  const JUDGE0_API_HOST = 'judge0.com';
 
   // Step 1: Create a submission
   const submissionResponse = await fetch(`https://${JUDGE0_API_HOST}/submissions?base64_encoded=false&wait=false`, {
