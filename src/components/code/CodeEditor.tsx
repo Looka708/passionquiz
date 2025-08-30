@@ -24,7 +24,14 @@ export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
     try {
       const result = await runCode({ source_code: code, language_id: 52 }); // 52 is the language ID for C (GCC 9.2.0)
       setOutput(result);
-      if (result.status.id > 3) { // 3 is "Accepted"
+      
+      if (result.status.id === 6) { // Compilation Error
+         toast({
+          title: "Compilation Error",
+          description: "Please check the output section for details.",
+          variant: "destructive",
+        });
+      } else if (result.status.id > 3) { // Other errors (Runtime, TLE, etc.)
          toast({
           title: "Execution Error",
           description: result.status.description,
@@ -46,6 +53,7 @@ export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
   const getOutputTitle = (statusId: number) => {
     if (statusId <= 2) return "Compiling...";
     if (statusId === 3) return "Output";
+    if (statusId === 6) return "Compilation Error";
     return "Error";
   }
 
@@ -98,9 +106,9 @@ export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <pre className="bg-gray-900 text-white p-4 rounded-md font-code text-sm">
+            <pre className="bg-gray-900 text-white p-4 rounded-md font-code text-sm overflow-x-auto">
               <code>
-                {output.stdout || output.stderr || output.compile_output || "No output."}
+                {output.compile_output || output.stdout || output.stderr || "No output."}
               </code>
             </pre>
           </CardContent>
