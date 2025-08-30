@@ -14,6 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
   const [code, setCode] = useState(challenge.starterCode);
+  const [stdin, setStdin] = useState('');
   const [output, setOutput] = useState<RunCodeOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -23,7 +24,11 @@ export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
     setIsLoading(true);
     setOutput(null);
     try {
-      const result = await runCode({ source_code: code, language_id: 52 }); // 52 is the language ID for C (GCC 9.2.0)
+      const result = await runCode({ 
+        source_code: code, 
+        language_id: 52, // 52 is the language ID for C (GCC 9.2.0)
+        stdin: stdin 
+      });
       setOutput(result);
       
       if (result.status.id === 6) { // Compilation Error
@@ -88,13 +93,32 @@ export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
             }}
           />
         </CardContent>
-        <CardFooter className="p-2 justify-end">
-           <Button onClick={handleRunCode} disabled={isLoading}>
-            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
-            Run Code
-          </Button>
-        </CardFooter>
       </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Input (stdin)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              placeholder="Enter input for your program here..."
+              value={stdin}
+              onChange={(e) => setStdin(e.target.value)}
+              className="font-code"
+            />
+          </CardContent>
+        </Card>
+         <Card>
+          <CardFooter className="p-4 justify-end h-full items-end">
+            <Button onClick={handleRunCode} disabled={isLoading}>
+              {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
+              Run Code
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+
 
       {output && (
         <Card>
