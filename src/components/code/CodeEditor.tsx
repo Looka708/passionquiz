@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -34,7 +35,7 @@ export function CodeEditor({ challenge }: { challenge: CodeChallenge }) {
       } else if (result.status.id > 3) { // Other errors (Runtime, TLE, etc.)
          toast({
           title: "Execution Error",
-          description: result.status.description,
+          description: "Your code failed to run correctly. Please check your logic and fix your code.",
           variant: "destructive",
         });
       }
