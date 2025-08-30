@@ -36,15 +36,28 @@ export type RunCodeOutput = z.infer<typeof RunCodeOutputSchema>;
 export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
   const JUDGE0_API_HOST = 'https://ce.judge0.com';
 
+  const encodedBody = {
+    ...input,
+    source_code: Buffer.from(input.source_code).toString('base64'),
+    stdin: input.stdin ? Buffer.from(input.stdin).toString('base64') : undefined,
+  }
+
   // Step 1: Create a submission
-  const submissionResponse = await fetch(`${JUDGE0_API_HOST}/submissions?base64_encoded=false&wait=false`, {
-    method: 'POST',
-    headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-    },
-    body: JSON.stringify(input)
-  });
+  let submissionResponse;
+  try {
+    submissionResponse = await fetch(`${JUDGE0_API_HOST}/submissions?base64_encoded=true&wait=false`, {
+      method: 'POST',
+      headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json'
+      },
+      body: JSON.stringify(encodedBody)
+    });
+  } catch (err) {
+      console.error("Fetch failed:", err);
+      throw new Error("Failed to connect to the compilation service.");
+  }
+
 
   if (!submissionResponse.ok) {
       const errorBody = await submissionResponse.text();
@@ -61,13 +74,19 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
   // Step 2: Poll for the result
   let result: RunCodeOutput;
   while (true) {
-    const resultResponse = await fetch(`${JUDGE0_API_HOST}/submissions/${token}?base64_encoded=false`, {
-      method: 'GET',
-       headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-      }
-    });
+    let resultResponse;
+    try {
+        resultResponse = await fetch(`${JUDGE0_API_HOST}/submissions/${token}?base64_encoded=true`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
+        });
+    } catch (err) {
+        console.error("Fetch failed:", err);
+        throw new Error("Failed to connect to the compilation service while polling for result.");
+    }
     
      if (!resultResponse.ok) {
       const errorBody = await resultResponse.text();
@@ -84,5 +103,15 @@ export async function runCode(input: RunCodeInput): Promise<RunCodeOutput> {
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
-  return result;
+  // Decode the output fields
+  const decodedResult: RunCodeOutput = {
+    ...result,
+    stdout: result.stdout ? Buffer.from(result.stdout, 'base64').toString('utf-8') : null,
+    stderr: result.stderr ? Buffer.from(result.stderr, 'base64').toString('utf-8') : null,
+    compile_output: result.compile_output ? Buffer.from(result.compile_output, 'base64').toString('utf-8') : null,
+    message: result.message ? Buffer.from(result.message, 'base64').toString('utf-8') : null,
+  };
+
+
+  return decodedResult;
 }
