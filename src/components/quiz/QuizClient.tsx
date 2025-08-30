@@ -53,7 +53,7 @@ export function QuizClient({ quiz }: { quiz: Quiz }) {
         Question {currentQuestionIndex + 1} of {quiz.questions.length}
       </p>
 
-      <Progress value={progress} className="w-full mb-4 h-2 bg-muted" indicatorClassName="bg-accent"/>
+      <Progress value={progress} className="w-full mb-4 h-2 bg-muted" indicatorClassName="bg-primary"/>
 
       <Card>
         <CardContent className="p-6">
