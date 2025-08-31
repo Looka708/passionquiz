@@ -48,7 +48,7 @@ Make sure you have Node.js and npm installed on your machine.
 
 1.  **Clone the repository:**
     ```sh
-    git clone [<your-repository-url>](https://github.com/Looka708/passionquiz)
+    git clone (https://github.com/Looka708/passionquiz)
     ```
 
 2.  **Navigate to the project directory:**
